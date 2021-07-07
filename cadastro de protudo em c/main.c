@@ -1,79 +1,69 @@
 #include <stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include<locale.h>
-struct contatos
+#include <stdlib.h>
+#include <locale.h>
+#define tamanho 5
+///estrutura da fila 
+struct fila_estrutura{
+	int cadastro[tamanho];
+	int ini;
+ 	int fim;
+ 	char arquivo[10];
+ 	char extencao[10];
+	};
+	// Variavel uso global
+struct fila_estrutura fila;
+int op;
+	
+  void menu_mostrar();	
+	void adicionar_elemento();
+// Corpo principal do sistema
+int main()
 {
-    int codigo;
-    char nome[30],telefone[15],email[60];
-
-};
-int main ()
-{
-    setlocale(LC_ALL, "Portuguese");
-    int op,contador = 0, i;
-    struct contatos pessoa[5];
-    do
-    {
-        printf("escolha uma opção\n");
-        printf("digite 1 inserir novo cadastro;\n");
-        printf("digite 2 para mostar todos cadastro\n");
-        printf("digite 0 para sair\n\n");
-        scanf ("%d", &op);
-        setbuf(stdin,NULL);
-        switch (op)
+    ///	setlocale(LC_ALL, "Portuguese");
+    op = 1;
+    fila.ini = 0;
+    fila.fim = 0;
+        while (op != 0)
         {
-        case 1:
-            if(contador <= 4)
-            {   
-                printf("cadastro de contato\n");
-                printf("codigo:%d\n",contador);
-                printf("imforme o nome : ");
-                fgets(pessoa[contador].nome,30,stdin);
-                setbuf(stdin,NULL);
-                printf("informe o telefone : ");
-                fgets(pessoa[contador].telefone,15, stdin);
-                setbuf(stdin,NULL);
-                printf("informe o email: ");
-                /*ussa ffush(stdin); usado no windows
-                 para lipar a cache do teclado
-                usado para cada um fgets*/
-                fgets(pessoa[contador].email,60,stdin);
-                setbuf(stdin,NULL);
-                contador++;
-            }
-            else
+          	system("cls");
+            menu_mostrar();
+            printf("opção");
+            scanf("%d", &op);
+            switch (op)
             {
-                printf("agenda lotada\n\n");
+            case 1:
+                adicionar_elemento();
+                break;
+            case 2:
+               retirar_fila();
+                break;
             }
-            printf("\n");
-            break;
-        case 2:
-            if (contador == 0)
-            {
-                printf("agenda vazia...\n\n");
-            }
-            else
-            {
-                printf("mostar lista de cadastrado na agenda\n");
-
-                for (i = 0 ; i < contador; i++)
-                {
-                    printf("codigo: %d\n",i);
-                    printf("nome: %s",pessoa[i].nome);
-                    printf("telefone: %s",pessoa[i].telefone);
-                    printf("email: %s\n",pessoa[i].email);
-                }
-            }
-            break;
-        case 0:
-            printf("encerramento do programa\n");
-            break;
-        default:
-            printf("Erro: opção inválida!\n\n");
-            break;
         }
-    }
-    while (op != 0);
-    return(0);
 }
+	//adiciona um elemento a fila
+	void adicionar_elemento(){
+            if (fila.fim == tamanho)
+            {
+                printf("\nA fila está cheia, espere esvasiar rsrsr!\n\n");
+                system("pause");
+            }
+            else
+            {
+                printf("\nDigite o Ra do aluno: ");
+                scanf("%d", &fila.cadastro[fila.fim]);
+                printf("\nDigite  Nome do arquivo: ");
+                scanf("%s", fila.arquivo[fila.fim]);
+                printf("\nDigite a Extensão do arquivo: ");
+                scanf("%s", fila.extencao[fila.fim]);
+                fila.fim++;
+            }
+        }
+	// mostra o menu de escolha
+     void menu_mostrar()
+            {
+                printf("\nOpção de menu\n\n");
+                printf("1- Inserir um elemento na fila\n");
+                printf("2- Remover um elemento da fila\n");
+                printf("3- Esvaziar a fila\n");
+              	printf("0- Encerrar o programa\n");
+            }
